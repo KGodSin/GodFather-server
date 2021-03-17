@@ -56,6 +56,14 @@ func (poc *ProductOrderCreate) SetRegisteredAt(t time.Time) *ProductOrderCreate 
 	return poc
 }
 
+// SetNillableRegisteredAt sets the "registered_at" field if the given value is not nil.
+func (poc *ProductOrderCreate) SetNillableRegisteredAt(t *time.Time) *ProductOrderCreate {
+	if t != nil {
+		poc.SetRegisteredAt(*t)
+	}
+	return poc
+}
+
 // Mutation returns the ProductOrderMutation object of the builder.
 func (poc *ProductOrderCreate) Mutation() *ProductOrderMutation {
 	return poc.mutation
@@ -67,6 +75,7 @@ func (poc *ProductOrderCreate) Save(ctx context.Context) (*Product_order, error)
 		err  error
 		node *Product_order
 	)
+	poc.defaults()
 	if len(poc.hooks) == 0 {
 		if err = poc.check(); err != nil {
 			return nil, err
@@ -103,6 +112,14 @@ func (poc *ProductOrderCreate) SaveX(ctx context.Context) *Product_order {
 		panic(err)
 	}
 	return v
+}
+
+// defaults sets the default values of the builder before save.
+func (poc *ProductOrderCreate) defaults() {
+	if _, ok := poc.mutation.RegisteredAt(); !ok {
+		v := product_order.DefaultRegisteredAt()
+		poc.mutation.SetRegisteredAt(v)
+	}
 }
 
 // check runs all checks and user-defined validators on the builder.
@@ -217,6 +234,7 @@ func (pocb *ProductOrderCreateBulk) Save(ctx context.Context) ([]*Product_order,
 	for i := range pocb.builders {
 		func(i int, root context.Context) {
 			builder := pocb.builders[i]
+			builder.defaults()
 			var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
 				mutation, ok := m.(*ProductOrderMutation)
 				if !ok {

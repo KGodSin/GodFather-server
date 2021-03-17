@@ -1,6 +1,8 @@
 package schema
 
 import (
+	"time"
+
 	"entgo.io/ent"
 	"entgo.io/ent/schema/field"
 )
@@ -18,7 +20,7 @@ func (Product_order) Fields() []ent.Field {
 		field.Int("count"),
 		field.Time("start_date"),
 		field.Time("end_date"),
-		field.Time("registered_at"),
+		field.Time("registered_at").Default(time.Now),
 	}
 }
 

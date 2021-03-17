@@ -2,6 +2,10 @@
 
 package product
 
+import (
+	"time"
+)
+
 const (
 	// Label holds the string label denoting the product type in the database.
 	Label = "product"
@@ -49,3 +53,8 @@ func ValidColumn(column string) bool {
 	}
 	return false
 }
+
+var (
+	// DefaultRegisteredAt holds the default value on creation for the "registered_at" field.
+	DefaultRegisteredAt func() time.Time
+)

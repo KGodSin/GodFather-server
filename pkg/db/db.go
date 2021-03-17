@@ -2,6 +2,8 @@ package db
 
 import (
 	"GodFather-server/ent"
+	"context"
+	"log"
 
 	_ "github.com/go-sql-driver/mysql"
 )
@@ -12,6 +14,10 @@ func GetDB(n string) (*ent.Client, error) {
 	client, err := ent.Open("mysql", dsn)
 	if err != nil {
 		return nil, err
+	}
+
+	if err := client.Schema.Create(context.Background()); err != nil {
+		log.Fatalf("failed creating schema resources: %v", err)
 	}
 
 	return client, nil

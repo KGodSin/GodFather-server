@@ -3,7 +3,12 @@
 package ent
 
 import (
+	"GodFather-server/ent/approval_information"
+	"GodFather-server/ent/product"
+	"GodFather-server/ent/product_order"
 	"GodFather-server/ent/schema"
+	"GodFather-server/ent/user"
+	"time"
 )
 
 // The init function reads all schema descriptors with runtime code
@@ -12,6 +17,30 @@ import (
 func init() {
 	approval_informationFields := schema.Approval_information{}.Fields()
 	_ = approval_informationFields
+	// approval_informationDescRegisteredAt is the schema descriptor for registered_at field.
+	approval_informationDescRegisteredAt := approval_informationFields[5].Descriptor()
+	// approval_information.DefaultRegisteredAt holds the default value on creation for the registered_at field.
+	approval_information.DefaultRegisteredAt = approval_informationDescRegisteredAt.Default.(func() time.Time)
+	productFields := schema.Product{}.Fields()
+	_ = productFields
+	// productDescRegisteredAt is the schema descriptor for registered_at field.
+	productDescRegisteredAt := productFields[1].Descriptor()
+	// product.DefaultRegisteredAt holds the default value on creation for the registered_at field.
+	product.DefaultRegisteredAt = productDescRegisteredAt.Default.(func() time.Time)
+	product_orderFields := schema.Product_order{}.Fields()
+	_ = product_orderFields
+	// product_orderDescRegisteredAt is the schema descriptor for registered_at field.
+	product_orderDescRegisteredAt := product_orderFields[5].Descriptor()
+	// product_order.DefaultRegisteredAt holds the default value on creation for the registered_at field.
+	product_order.DefaultRegisteredAt = product_orderDescRegisteredAt.Default.(func() time.Time)
 	userFields := schema.User{}.Fields()
 	_ = userFields
+	// userDescRegisteredAt is the schema descriptor for registered_at field.
+	userDescRegisteredAt := userFields[4].Descriptor()
+	// user.DefaultRegisteredAt holds the default value on creation for the registered_at field.
+	user.DefaultRegisteredAt = userDescRegisteredAt.Default.(func() time.Time)
+	// userDescUpdatedAt is the schema descriptor for updated_at field.
+	userDescUpdatedAt := userFields[5].Descriptor()
+	// user.DefaultUpdatedAt holds the default value on creation for the updated_at field.
+	user.DefaultUpdatedAt = userDescUpdatedAt.Default.(func() time.Time)
 }

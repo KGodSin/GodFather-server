@@ -1,4 +1,4 @@
-package testHandler
+package v1handler
 
 import (
 	"fmt"

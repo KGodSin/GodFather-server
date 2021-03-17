@@ -59,8 +59,16 @@ func (aic *ApprovalInformationCreate) SetProductID(s string) *ApprovalInformatio
 }
 
 // SetRegisteredAt sets the "registered_at" field.
-func (aic *ApprovalInformationCreate) SetRegisteredAt(s string) *ApprovalInformationCreate {
-	aic.mutation.SetRegisteredAt(s)
+func (aic *ApprovalInformationCreate) SetRegisteredAt(t time.Time) *ApprovalInformationCreate {
+	aic.mutation.SetRegisteredAt(t)
+	return aic
+}
+
+// SetNillableRegisteredAt sets the "registered_at" field if the given value is not nil.
+func (aic *ApprovalInformationCreate) SetNillableRegisteredAt(t *time.Time) *ApprovalInformationCreate {
+	if t != nil {
+		aic.SetRegisteredAt(*t)
+	}
 	return aic
 }
 
@@ -119,6 +127,10 @@ func (aic *ApprovalInformationCreate) defaults() {
 	if _, ok := aic.mutation.Status(); !ok {
 		v := approval_information.DefaultStatus
 		aic.mutation.SetStatus(v)
+	}
+	if _, ok := aic.mutation.RegisteredAt(); !ok {
+		v := approval_information.DefaultRegisteredAt()
+		aic.mutation.SetRegisteredAt(v)
 	}
 }
 
@@ -216,7 +228,7 @@ func (aic *ApprovalInformationCreate) createSpec() (*Approval_information, *sqlg
 	}
 	if value, ok := aic.mutation.RegisteredAt(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
+			Type:   field.TypeTime,
 			Value:  value,
 			Column: approval_information.FieldRegisteredAt,
 		})

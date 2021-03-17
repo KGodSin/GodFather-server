@@ -77,6 +77,14 @@ func (pou *ProductOrderUpdate) SetRegisteredAt(t time.Time) *ProductOrderUpdate 
 	return pou
 }
 
+// SetNillableRegisteredAt sets the "registered_at" field if the given value is not nil.
+func (pou *ProductOrderUpdate) SetNillableRegisteredAt(t *time.Time) *ProductOrderUpdate {
+	if t != nil {
+		pou.SetRegisteredAt(*t)
+	}
+	return pou
+}
+
 // Mutation returns the ProductOrderMutation object of the builder.
 func (pou *ProductOrderUpdate) Mutation() *ProductOrderMutation {
 	return pou.mutation
@@ -272,6 +280,14 @@ func (pouo *ProductOrderUpdateOne) SetEndDate(t time.Time) *ProductOrderUpdateOn
 // SetRegisteredAt sets the "registered_at" field.
 func (pouo *ProductOrderUpdateOne) SetRegisteredAt(t time.Time) *ProductOrderUpdateOne {
 	pouo.mutation.SetRegisteredAt(t)
+	return pouo
+}
+
+// SetNillableRegisteredAt sets the "registered_at" field if the given value is not nil.
+func (pouo *ProductOrderUpdateOne) SetNillableRegisteredAt(t *time.Time) *ProductOrderUpdateOne {
+	if t != nil {
+		pouo.SetRegisteredAt(*t)
+	}
 	return pouo
 }
 
