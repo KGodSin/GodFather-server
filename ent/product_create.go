@@ -129,7 +129,6 @@ func (pc *ProductCreate) defaults() {
 		pc.mutation.SetRegisteredAt(v)
 	}
 }
-
 // check runs all checks and user-defined validators on the builder.
 func (pc *ProductCreate) check() error {
 	if _, ok := pc.mutation.Name(); !ok {

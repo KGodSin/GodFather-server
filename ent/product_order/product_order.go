@@ -5,7 +5,6 @@ package product_order
 import (
 	"time"
 )
-
 const (
 	// Label holds the string label denoting the product_order type in the database.
 	Label = "product_order"

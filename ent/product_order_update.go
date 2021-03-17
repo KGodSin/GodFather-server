@@ -290,7 +290,6 @@ func (pouo *ProductOrderUpdateOne) SetNillableRegisteredAt(t *time.Time) *Produc
 	}
 	return pouo
 }
-
 // Mutation returns the ProductOrderMutation object of the builder.
 func (pouo *ProductOrderUpdateOne) Mutation() *ProductOrderMutation {
 	return pouo.mutation
