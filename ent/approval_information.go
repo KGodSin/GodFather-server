@@ -27,7 +27,7 @@ type Approval_information struct {
 	// ProductID holds the value of the "product_id" field.
 	ProductID string `json:"product_id,omitempty"`
 	// RegisteredAt holds the value of the "registered_at" field.
-	RegisteredAt                  string `json:"registered_at,omitempty"`
+	RegisteredAt                  time.Time `json:"registered_at,omitempty"`
 	product_approval_informations *int
 	user_approval_informations    *int
 }
@@ -39,9 +39,9 @@ func (*Approval_information) scanValues(columns []string) ([]interface{}, error)
 		switch columns[i] {
 		case approval_information.FieldID, approval_information.FieldCount:
 			values[i] = &sql.NullInt64{}
-		case approval_information.FieldStatus, approval_information.FieldUserID, approval_information.FieldProductID, approval_information.FieldRegisteredAt:
+		case approval_information.FieldStatus, approval_information.FieldUserID, approval_information.FieldProductID:
 			values[i] = &sql.NullString{}
-		case approval_information.FieldApprovalDate:
+		case approval_information.FieldApprovalDate, approval_information.FieldRegisteredAt:
 			values[i] = &sql.NullTime{}
 		case approval_information.ForeignKeys[0]: // product_approval_informations
 			values[i] = &sql.NullInt64{}
@@ -99,10 +99,10 @@ func (ai *Approval_information) assignValues(columns []string, values []interfac
 				ai.ProductID = value.String
 			}
 		case approval_information.FieldRegisteredAt:
-			if value, ok := values[i].(*sql.NullString); !ok {
+			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field registered_at", values[i])
 			} else if value.Valid {
-				ai.RegisteredAt = value.String
+				ai.RegisteredAt = value.Time
 			}
 		case approval_information.ForeignKeys[0]:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
@@ -157,7 +157,7 @@ func (ai *Approval_information) String() string {
 	builder.WriteString(", product_id=")
 	builder.WriteString(ai.ProductID)
 	builder.WriteString(", registered_at=")
-	builder.WriteString(ai.RegisteredAt)
+	builder.WriteString(ai.RegisteredAt.Format(time.ANSIC))
 	builder.WriteByte(')')
 	return builder.String()
 }

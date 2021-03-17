@@ -34,6 +34,14 @@ func (pc *ProductCreate) SetRegisteredAt(t time.Time) *ProductCreate {
 	return pc
 }
 
+// SetNillableRegisteredAt sets the "registered_at" field if the given value is not nil.
+func (pc *ProductCreate) SetNillableRegisteredAt(t *time.Time) *ProductCreate {
+	if t != nil {
+		pc.SetRegisteredAt(*t)
+	}
+	return pc
+}
+
 // AddProductOrderIDs adds the "product_orders" edge to the Product_order entity by IDs.
 func (pc *ProductCreate) AddProductOrderIDs(ids ...int) *ProductCreate {
 	pc.mutation.AddProductOrderIDs(ids...)
@@ -75,6 +83,7 @@ func (pc *ProductCreate) Save(ctx context.Context) (*Product, error) {
 		err  error
 		node *Product
 	)
+	pc.defaults()
 	if len(pc.hooks) == 0 {
 		if err = pc.check(); err != nil {
 			return nil, err
@@ -113,6 +122,13 @@ func (pc *ProductCreate) SaveX(ctx context.Context) *Product {
 	return v
 }
 
+// defaults sets the default values of the builder before save.
+func (pc *ProductCreate) defaults() {
+	if _, ok := pc.mutation.RegisteredAt(); !ok {
+		v := product.DefaultRegisteredAt()
+		pc.mutation.SetRegisteredAt(v)
+	}
+}
 // check runs all checks and user-defined validators on the builder.
 func (pc *ProductCreate) check() error {
 	if _, ok := pc.mutation.Name(); !ok {
@@ -219,6 +235,7 @@ func (pcb *ProductCreateBulk) Save(ctx context.Context) ([]*Product, error) {
 	for i := range pcb.builders {
 		func(i int, root context.Context) {
 			builder := pcb.builders[i]
+			builder.defaults()
 			var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
 				mutation, ok := m.(*ProductMutation)
 				if !ok {

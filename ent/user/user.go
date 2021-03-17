@@ -4,6 +4,7 @@ package user
 
 import (
 	"fmt"
+	"time"
 )
 
 const (
@@ -56,6 +57,13 @@ func ValidColumn(column string) bool {
 	}
 	return false
 }
+
+var (
+	// DefaultRegisteredAt holds the default value on creation for the "registered_at" field.
+	DefaultRegisteredAt func() time.Time
+	// DefaultUpdatedAt holds the default value on creation for the "updated_at" field.
+	DefaultUpdatedAt func() time.Time
+)
 
 // Role defines the type for the "role" enum field.
 type Role string

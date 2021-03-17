@@ -16,7 +16,7 @@ var (
 		{Name: "count", Type: field.TypeInt},
 		{Name: "user_id", Type: field.TypeString},
 		{Name: "product_id", Type: field.TypeString},
-		{Name: "registered_at", Type: field.TypeString},
+		{Name: "registered_at", Type: field.TypeTime},
 		{Name: "product_approval_informations", Type: field.TypeInt, Nullable: true},
 		{Name: "user_approval_informations", Type: field.TypeInt, Nullable: true},
 	}

@@ -4,6 +4,7 @@ package approval_information
 
 import (
 	"fmt"
+	"time"
 )
 
 const (
@@ -59,6 +60,11 @@ func ValidColumn(column string) bool {
 	}
 	return false
 }
+
+var (
+	// DefaultRegisteredAt holds the default value on creation for the "registered_at" field.
+	DefaultRegisteredAt func() time.Time
+)
 
 // Status defines the type for the "status" enum field.
 type Status string

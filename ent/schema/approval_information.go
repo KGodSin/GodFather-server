@@ -1,6 +1,8 @@
 package schema
 
 import (
+	"time"
+
 	"entgo.io/ent"
 	"entgo.io/ent/schema/field"
 )
@@ -18,7 +20,7 @@ func (Approval_information) Fields() []ent.Field {
 		field.Int("count"),
 		field.String("user_id"),
 		field.String("product_id"),
-		field.String("registered_at"),
+		field.Time("registered_at").Default(time.Now),
 	}
 }
 

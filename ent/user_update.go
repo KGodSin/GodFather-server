@@ -66,9 +66,25 @@ func (uu *UserUpdate) SetRegisteredAt(t time.Time) *UserUpdate {
 	return uu
 }
 
+// SetNillableRegisteredAt sets the "registered_at" field if the given value is not nil.
+func (uu *UserUpdate) SetNillableRegisteredAt(t *time.Time) *UserUpdate {
+	if t != nil {
+		uu.SetRegisteredAt(*t)
+	}
+	return uu
+}
+
 // SetUpdatedAt sets the "updated_at" field.
 func (uu *UserUpdate) SetUpdatedAt(t time.Time) *UserUpdate {
 	uu.mutation.SetUpdatedAt(t)
+	return uu
+}
+
+// SetNillableUpdatedAt sets the "updated_at" field if the given value is not nil.
+func (uu *UserUpdate) SetNillableUpdatedAt(t *time.Time) *UserUpdate {
+	if t != nil {
+		uu.SetUpdatedAt(*t)
+	}
 	return uu
 }
 
@@ -350,9 +366,25 @@ func (uuo *UserUpdateOne) SetRegisteredAt(t time.Time) *UserUpdateOne {
 	return uuo
 }
 
+// SetNillableRegisteredAt sets the "registered_at" field if the given value is not nil.
+func (uuo *UserUpdateOne) SetNillableRegisteredAt(t *time.Time) *UserUpdateOne {
+	if t != nil {
+		uuo.SetRegisteredAt(*t)
+	}
+	return uuo
+}
+
 // SetUpdatedAt sets the "updated_at" field.
 func (uuo *UserUpdateOne) SetUpdatedAt(t time.Time) *UserUpdateOne {
 	uuo.mutation.SetUpdatedAt(t)
+	return uuo
+}
+
+// SetNillableUpdatedAt sets the "updated_at" field if the given value is not nil.
+func (uuo *UserUpdateOne) SetNillableUpdatedAt(t *time.Time) *UserUpdateOne {
+	if t != nil {
+		uuo.SetUpdatedAt(*t)
+	}
 	return uuo
 }
 

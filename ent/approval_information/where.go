@@ -121,7 +121,7 @@ func ProductID(v string) predicate.Approval_information {
 }
 
 // RegisteredAt applies equality check predicate on the "registered_at" field. It's identical to RegisteredAtEQ.
-func RegisteredAt(v string) predicate.Approval_information {
+func RegisteredAt(v time.Time) predicate.Approval_information {
 	return predicate.Approval_information(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldRegisteredAt), v))
 	})
@@ -550,21 +550,21 @@ func ProductIDContainsFold(v string) predicate.Approval_information {
 }
 
 // RegisteredAtEQ applies the EQ predicate on the "registered_at" field.
-func RegisteredAtEQ(v string) predicate.Approval_information {
+func RegisteredAtEQ(v time.Time) predicate.Approval_information {
 	return predicate.Approval_information(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldRegisteredAt), v))
 	})
 }
 
 // RegisteredAtNEQ applies the NEQ predicate on the "registered_at" field.
-func RegisteredAtNEQ(v string) predicate.Approval_information {
+func RegisteredAtNEQ(v time.Time) predicate.Approval_information {
 	return predicate.Approval_information(func(s *sql.Selector) {
 		s.Where(sql.NEQ(s.C(FieldRegisteredAt), v))
 	})
 }
 
 // RegisteredAtIn applies the In predicate on the "registered_at" field.
-func RegisteredAtIn(vs ...string) predicate.Approval_information {
+func RegisteredAtIn(vs ...time.Time) predicate.Approval_information {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -581,7 +581,7 @@ func RegisteredAtIn(vs ...string) predicate.Approval_information {
 }
 
 // RegisteredAtNotIn applies the NotIn predicate on the "registered_at" field.
-func RegisteredAtNotIn(vs ...string) predicate.Approval_information {
+func RegisteredAtNotIn(vs ...time.Time) predicate.Approval_information {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -598,65 +598,30 @@ func RegisteredAtNotIn(vs ...string) predicate.Approval_information {
 }
 
 // RegisteredAtGT applies the GT predicate on the "registered_at" field.
-func RegisteredAtGT(v string) predicate.Approval_information {
+func RegisteredAtGT(v time.Time) predicate.Approval_information {
 	return predicate.Approval_information(func(s *sql.Selector) {
 		s.Where(sql.GT(s.C(FieldRegisteredAt), v))
 	})
 }
 
 // RegisteredAtGTE applies the GTE predicate on the "registered_at" field.
-func RegisteredAtGTE(v string) predicate.Approval_information {
+func RegisteredAtGTE(v time.Time) predicate.Approval_information {
 	return predicate.Approval_information(func(s *sql.Selector) {
 		s.Where(sql.GTE(s.C(FieldRegisteredAt), v))
 	})
 }
 
 // RegisteredAtLT applies the LT predicate on the "registered_at" field.
-func RegisteredAtLT(v string) predicate.Approval_information {
+func RegisteredAtLT(v time.Time) predicate.Approval_information {
 	return predicate.Approval_information(func(s *sql.Selector) {
 		s.Where(sql.LT(s.C(FieldRegisteredAt), v))
 	})
 }
 
 // RegisteredAtLTE applies the LTE predicate on the "registered_at" field.
-func RegisteredAtLTE(v string) predicate.Approval_information {
+func RegisteredAtLTE(v time.Time) predicate.Approval_information {
 	return predicate.Approval_information(func(s *sql.Selector) {
 		s.Where(sql.LTE(s.C(FieldRegisteredAt), v))
-	})
-}
-
-// RegisteredAtContains applies the Contains predicate on the "registered_at" field.
-func RegisteredAtContains(v string) predicate.Approval_information {
-	return predicate.Approval_information(func(s *sql.Selector) {
-		s.Where(sql.Contains(s.C(FieldRegisteredAt), v))
-	})
-}
-
-// RegisteredAtHasPrefix applies the HasPrefix predicate on the "registered_at" field.
-func RegisteredAtHasPrefix(v string) predicate.Approval_information {
-	return predicate.Approval_information(func(s *sql.Selector) {
-		s.Where(sql.HasPrefix(s.C(FieldRegisteredAt), v))
-	})
-}
-
-// RegisteredAtHasSuffix applies the HasSuffix predicate on the "registered_at" field.
-func RegisteredAtHasSuffix(v string) predicate.Approval_information {
-	return predicate.Approval_information(func(s *sql.Selector) {
-		s.Where(sql.HasSuffix(s.C(FieldRegisteredAt), v))
-	})
-}
-
-// RegisteredAtEqualFold applies the EqualFold predicate on the "registered_at" field.
-func RegisteredAtEqualFold(v string) predicate.Approval_information {
-	return predicate.Approval_information(func(s *sql.Selector) {
-		s.Where(sql.EqualFold(s.C(FieldRegisteredAt), v))
-	})
-}
-
-// RegisteredAtContainsFold applies the ContainsFold predicate on the "registered_at" field.
-func RegisteredAtContainsFold(v string) predicate.Approval_information {
-	return predicate.Approval_information(func(s *sql.Selector) {
-		s.Where(sql.ContainsFold(s.C(FieldRegisteredAt), v))
 	})
 }
 

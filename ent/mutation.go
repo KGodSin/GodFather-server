@@ -43,7 +43,7 @@ type ApprovalInformationMutation struct {
 	addcount      *int
 	user_id       *string
 	product_id    *string
-	registered_at *string
+	registered_at *time.Time
 	clearedFields map[string]struct{}
 	done          bool
 	oldValue      func(context.Context) (*Approval_information, error)
@@ -330,12 +330,12 @@ func (m *ApprovalInformationMutation) ResetProductID() {
 }
 
 // SetRegisteredAt sets the "registered_at" field.
-func (m *ApprovalInformationMutation) SetRegisteredAt(s string) {
-	m.registered_at = &s
+func (m *ApprovalInformationMutation) SetRegisteredAt(t time.Time) {
+	m.registered_at = &t
 }
 
 // RegisteredAt returns the value of the "registered_at" field in the mutation.
-func (m *ApprovalInformationMutation) RegisteredAt() (r string, exists bool) {
+func (m *ApprovalInformationMutation) RegisteredAt() (r time.Time, exists bool) {
 	v := m.registered_at
 	if v == nil {
 		return
@@ -346,7 +346,7 @@ func (m *ApprovalInformationMutation) RegisteredAt() (r string, exists bool) {
 // OldRegisteredAt returns the old "registered_at" field's value of the Approval_information entity.
 // If the Approval_information object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *ApprovalInformationMutation) OldRegisteredAt(ctx context.Context) (v string, err error) {
+func (m *ApprovalInformationMutation) OldRegisteredAt(ctx context.Context) (v time.Time, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, fmt.Errorf("OldRegisteredAt is only allowed on UpdateOne operations")
 	}
@@ -484,7 +484,7 @@ func (m *ApprovalInformationMutation) SetField(name string, value ent.Value) err
 		m.SetProductID(v)
 		return nil
 	case approval_information.FieldRegisteredAt:
-		v, ok := value.(string)
+		v, ok := value.(time.Time)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}

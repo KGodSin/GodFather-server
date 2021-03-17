@@ -1,6 +1,8 @@
 package schema
 
 import (
+	"time"
+
 	"entgo.io/ent"
 	"entgo.io/ent/schema/edge"
 	"entgo.io/ent/schema/field"
@@ -21,8 +23,8 @@ func (User) Fields() []ent.Field {
 			"admin",
 			"user",
 		).Default("user"),
-		field.Time("registered_at"),
-		field.Time("updated_at"),
+		field.Time("registered_at").Default(time.Now),
+		field.Time("updated_at").Default(time.Now),
 	}
 }
 

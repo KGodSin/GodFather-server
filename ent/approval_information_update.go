@@ -73,8 +73,16 @@ func (aiu *ApprovalInformationUpdate) SetProductID(s string) *ApprovalInformatio
 }
 
 // SetRegisteredAt sets the "registered_at" field.
-func (aiu *ApprovalInformationUpdate) SetRegisteredAt(s string) *ApprovalInformationUpdate {
-	aiu.mutation.SetRegisteredAt(s)
+func (aiu *ApprovalInformationUpdate) SetRegisteredAt(t time.Time) *ApprovalInformationUpdate {
+	aiu.mutation.SetRegisteredAt(t)
+	return aiu
+}
+
+// SetNillableRegisteredAt sets the "registered_at" field if the given value is not nil.
+func (aiu *ApprovalInformationUpdate) SetNillableRegisteredAt(t *time.Time) *ApprovalInformationUpdate {
+	if t != nil {
+		aiu.SetRegisteredAt(*t)
+	}
 	return aiu
 }
 
@@ -212,7 +220,7 @@ func (aiu *ApprovalInformationUpdate) sqlSave(ctx context.Context) (n int, err e
 	}
 	if value, ok := aiu.mutation.RegisteredAt(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
+			Type:   field.TypeTime,
 			Value:  value,
 			Column: approval_information.FieldRegisteredAt,
 		})
@@ -281,8 +289,16 @@ func (aiuo *ApprovalInformationUpdateOne) SetProductID(s string) *ApprovalInform
 }
 
 // SetRegisteredAt sets the "registered_at" field.
-func (aiuo *ApprovalInformationUpdateOne) SetRegisteredAt(s string) *ApprovalInformationUpdateOne {
-	aiuo.mutation.SetRegisteredAt(s)
+func (aiuo *ApprovalInformationUpdateOne) SetRegisteredAt(t time.Time) *ApprovalInformationUpdateOne {
+	aiuo.mutation.SetRegisteredAt(t)
+	return aiuo
+}
+
+// SetNillableRegisteredAt sets the "registered_at" field if the given value is not nil.
+func (aiuo *ApprovalInformationUpdateOne) SetNillableRegisteredAt(t *time.Time) *ApprovalInformationUpdateOne {
+	if t != nil {
+		aiuo.SetRegisteredAt(*t)
+	}
 	return aiuo
 }
 
@@ -425,7 +441,7 @@ func (aiuo *ApprovalInformationUpdateOne) sqlSave(ctx context.Context) (_node *A
 	}
 	if value, ok := aiuo.mutation.RegisteredAt(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
+			Type:   field.TypeTime,
 			Value:  value,
 			Column: approval_information.FieldRegisteredAt,
 		})

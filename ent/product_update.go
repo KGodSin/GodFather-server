@@ -41,6 +41,14 @@ func (pu *ProductUpdate) SetRegisteredAt(t time.Time) *ProductUpdate {
 	return pu
 }
 
+// SetNillableRegisteredAt sets the "registered_at" field if the given value is not nil.
+func (pu *ProductUpdate) SetNillableRegisteredAt(t *time.Time) *ProductUpdate {
+	if t != nil {
+		pu.SetRegisteredAt(*t)
+	}
+	return pu
+}
+
 // AddProductOrderIDs adds the "product_orders" edge to the Product_order entity by IDs.
 func (pu *ProductUpdate) AddProductOrderIDs(ids ...int) *ProductUpdate {
 	pu.mutation.AddProductOrderIDs(ids...)
@@ -336,6 +344,14 @@ func (puo *ProductUpdateOne) SetName(s string) *ProductUpdateOne {
 // SetRegisteredAt sets the "registered_at" field.
 func (puo *ProductUpdateOne) SetRegisteredAt(t time.Time) *ProductUpdateOne {
 	puo.mutation.SetRegisteredAt(t)
+	return puo
+}
+
+// SetNillableRegisteredAt sets the "registered_at" field if the given value is not nil.
+func (puo *ProductUpdateOne) SetNillableRegisteredAt(t *time.Time) *ProductUpdateOne {
+	if t != nil {
+		puo.SetRegisteredAt(*t)
+	}
 	return puo
 }
 

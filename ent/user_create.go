@@ -59,9 +59,25 @@ func (uc *UserCreate) SetRegisteredAt(t time.Time) *UserCreate {
 	return uc
 }
 
+// SetNillableRegisteredAt sets the "registered_at" field if the given value is not nil.
+func (uc *UserCreate) SetNillableRegisteredAt(t *time.Time) *UserCreate {
+	if t != nil {
+		uc.SetRegisteredAt(*t)
+	}
+	return uc
+}
+
 // SetUpdatedAt sets the "updated_at" field.
 func (uc *UserCreate) SetUpdatedAt(t time.Time) *UserCreate {
 	uc.mutation.SetUpdatedAt(t)
+	return uc
+}
+
+// SetNillableUpdatedAt sets the "updated_at" field if the given value is not nil.
+func (uc *UserCreate) SetNillableUpdatedAt(t *time.Time) *UserCreate {
+	if t != nil {
+		uc.SetUpdatedAt(*t)
+	}
 	return uc
 }
 
@@ -135,6 +151,14 @@ func (uc *UserCreate) defaults() {
 	if _, ok := uc.mutation.Role(); !ok {
 		v := user.DefaultRole
 		uc.mutation.SetRole(v)
+	}
+	if _, ok := uc.mutation.RegisteredAt(); !ok {
+		v := user.DefaultRegisteredAt()
+		uc.mutation.SetRegisteredAt(v)
+	}
+	if _, ok := uc.mutation.UpdatedAt(); !ok {
+		v := user.DefaultUpdatedAt()
+		uc.mutation.SetUpdatedAt(v)
 	}
 }
 
