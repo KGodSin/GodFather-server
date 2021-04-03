@@ -63,10 +63,10 @@ func InitRouter() *gin.Engine {
 	r.Use(gin.Logger())
 	r.Use(gin.Recovery())
 
-	api := r.Group("/api")
+	api := r.Group("/admin")
 	{
-		api.POST("/signup", v1handler.Signup)
-		api.POST("/signin", v1handler.Signin)
+		api.POST("/users", v1handler.Signup)
+		// api.POST("/signin", v1handler.Signin)
 	}
 	// test := r.Group("/test").Use(TokenChecker())
 	// {

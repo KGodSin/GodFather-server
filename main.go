@@ -6,5 +6,5 @@ import (
 
 func main() {
 	r := router.InitRouter()
-	r.Run(":8080")
+	r.Run(":3030")
 }
