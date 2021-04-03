@@ -1,16 +1,9 @@
 package model
 
 import (
-	"GodFather-server/ent"
-	"GodFather-server/ent/user"
-	"context"
-	"fmt"
-	"log"
-
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
-	"golang.org/x/crypto/bcrypt"
 )
 
 type User struct {
@@ -60,71 +53,3 @@ var (
 	expirationTime = 5 * time.Minute
 	JwtKey         = []byte("This application was made by K-brother")
 )
-
-func (s User) IsValid(c *ent.Client) (ok bool) {
-	_, err := c.User.Query().Select(user.FieldUserID).Where(user.UserID(s.UserID)).First(context.Background())
-	if err != nil {
-		log.Println(err)
-		pwHash, err := bcrypt.GenerateFromPassword([]byte(s.Password), bcrypt.DefaultCost)
-		if err != nil {
-			log.Println(err)
-		}
-
-		s.Password = string(pwHash)
-		s.InsertUser(c)
-		return true
-	}
-
-	// if u.UserID != "" {
-	// 	s.InsertUser(c)
-	// 	return true
-	// }
-	return false
-}
-
-func (s User) InsertUser(c *ent.Client) {
-	_, err := c.User.Create().
-		SetUserID(s.UserID).
-		SetPassword(s.Password).
-		SetName(s.Name).
-		SetRole(user.Role(s.Role)).
-		Save(context.Background())
-
-	if err != nil {
-		panic(err)
-	}
-}
-
-func (s User) Signin(c *ent.Client) bool {
-	user, err := c.User.Query().Select(user.FieldUserID, user.FieldPassword).Where(user.UserID(s.UserID)).First(context.Background())
-	if err != nil {
-		log.Println(err)
-	}
-
-	err2 := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(s.Password))
-	if err2 != nil {
-		return false
-	} else {
-		return true
-	}
-}
-
-func (s User) GetToken() (string, error) {
-	expirationTime := time.Now().Add(expirationTime)
-
-	claims := Claims{
-		UserNo: int(s.ID),
-		StandardClaims: jwt.StandardClaims{
-			ExpiresAt: expirationTime.Unix(),
-		},
-	}
-
-	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-
-	tokenString, err := token.SignedString(JwtKey)
-	if err != nil {
-		return "", fmt.Errorf("token signed Error")
-	} else {
-		return tokenString, nil
-	}
-}
