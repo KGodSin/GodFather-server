@@ -1,7 +1,6 @@
 package router
 
 import (
-	"GodFather-server/pkg/db"
 	"GodFather-server/pkg/model"
 	v1handler "GodFather-server/routers/api/v1"
 	"net/http"
@@ -9,17 +8,6 @@ import (
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 )
-
-func dbGetter() gin.HandlerFunc {
-	return func(c *gin.Context) {
-		client, err := db.GetDB("team")
-		if err != nil {
-			panic(err)
-		}
-		c.Set("client", client)
-		c.Next()
-	}
-}
 
 func TokenChecker() gin.HandlerFunc {
 	return func(c *gin.Context) {
@@ -75,14 +63,15 @@ func InitRouter() *gin.Engine {
 	r.Use(gin.Logger())
 	r.Use(gin.Recovery())
 
-	api := r.Group("/api").Use(dbGetter())
+	api := r.Group("/api")
 	{
 		api.POST("/signup", v1handler.Signup)
 		api.POST("/signin", v1handler.Signin)
 	}
-	test := r.Group("/test").Use(TokenChecker())
-	{
-		test.POST("/token_test", v1handler.TokenTest)
-	}
+	// test := r.Group("/test").Use(TokenChecker())
+	// {
+	// 	test.POST("/token_test", v1handler.TokenTest)
+	// }
+
 	return r
 }
